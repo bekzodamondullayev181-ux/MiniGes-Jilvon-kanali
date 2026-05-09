@@ -1,298 +1,372 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="uz">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GES Projects</title>
-
-<style>
-
-body{
-    margin:0;
-    padding:30px;
-    background:#f3f3f3;
-    font-family:Arial, sans-serif;
-}
-
-.title{
-    text-align:center;
-    font-size:55px;
-    font-weight:bold;
-    color:#081847;
-    margin-bottom:40px;
-}
-
-.group-title{
-    font-size:34px;
-    font-weight:bold;
-    color:#081847;
-    margin-top:50px;
-    margin-bottom:25px;
-}
-
-.card{
-    background:white;
-    border-radius:14px;
-    margin-bottom:25px;
-    display:flex;
-    justify-content:space-between;
-    gap:25px;
-    padding:20px;
-    box-shadow:0 3px 10px rgba(0,0,0,0.08);
-    align-items:center;
-}
-
-.left{
-    display:flex;
-    gap:20px;
-    align-items:center;
-    width:75%;
-}
-
-.left img{
-    width:240px;
-    height:150px;
-    object-fit:cover;
-    border-radius:10px;
-}
-
-.info{
-    flex:1;
-}
-
-.name{
-    font-size:30px;
-    font-weight:bold;
-    color:#12307a;
-    margin-bottom:15px;
-}
-
-.info p{
-    margin:7px 0;
-    font-size:22px;
-}
-
-.right{
-    width:22%;
-    text-align:right;
-}
-
-.status{
-    color:green;
-    font-size:22px;
-    font-weight:bold;
-    margin-bottom:25px;
-}
-
-.price{
-    background:#dff5e5;
-    display:inline-block;
-    padding:15px 25px;
-    border-radius:10px;
-    font-size:34px;
-    font-weight:bold;
-}
-
-@media(max-width:900px){
-
-.card{
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-.left{
-    width:100%;
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-.left img{
-    width:100%;
-    height:auto;
-}
-
-.right{
-    width:100%;
-    text-align:left;
-}
-
-.title{
-    font-size:38px;
-}
-
-.name{
-    font-size:24px;
-}
-
-.info p{
-    font-size:18px;
-}
-
-}
-
-</style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini GES Loyihalari | E-Auksion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070d1a;
+      --surface: #0f1829;
+      --surface2: #162034;
+      --border: rgba(56,189,248,0.1);
+      --text: #e2eeff;
+      --muted: #5a7299;
+      --accent: #38bdf8;
+      --c1: #818cf8;
+      --c2: #34d399;
+      --c3: #fb923c;
+      --c4: #f472b6;
+      --c5: #facc15;
+      --c6: #a78bfa;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed; top: -300px; left: 50%; transform: translateX(-50%);
+      width: 1000px; height: 600px;
+      background: radial-gradient(ellipse, rgba(56,189,248,0.07) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+    .page {
+      position: relative; z-index: 1;
+      max-width: 1240px; margin: 0 auto; padding: 52px 24px 80px;
+    }
+    header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 28px; margin-bottom: 44px;
+      animation: fadeUp .55s ease both;
+    }
+    .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+    .logo {
+      width: 50px; height: 50px; border-radius: 16px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+      box-shadow: 0 0 36px rgba(56,189,248,0.28);
+    }
+    h1 {
+      font-size: clamp(24px, 4.5vw, 46px); font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1.05;
+      background: linear-gradient(135deg, #e2eeff 0%, #38bdf8 55%, #818cf8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .subtitle {
+      color: var(--muted); font-size: 14px; font-weight: 300;
+      margin-top: 6px; max-width: 520px; line-height: 1.6;
+    }
+    .stats { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+    .stat {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 18px; padding: 18px 22px; min-width: 118px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .stat::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--c1));
+    }
+    .stat strong {
+      display: block; font-size: 32px; font-weight: 800;
+      font-family: 'DM Mono', monospace;
+      background: linear-gradient(135deg, var(--accent), var(--c1));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat span { color: var(--muted); font-size: 12px; display: block; margin-top: 2px; }
+    .toolbar {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 22px; padding: 20px; margin-bottom: 20px;
+      animation: fadeUp .55s .1s ease both;
+    }
+    .search-wrap { position: relative; margin-bottom: 16px; }
+    .search-icon {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      color: var(--muted); font-size: 16px; pointer-events: none;
+    }
+    input[type="search"] {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 16px 14px 48px;
+      font-size: 14px; font-family: 'Sora', sans-serif; color: var(--text); outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input[type="search"]::placeholder { color: var(--muted); }
+    input[type="search"]::-webkit-search-cancel-button { filter: invert(1) opacity(.4); }
+    input[type="search"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,.12); }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      border: 1px solid var(--border); background: transparent; border-radius: 999px;
+      padding: 8px 14px; cursor: pointer; color: var(--muted);
+      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
+      transition: all .18s; display: flex; align-items: center; gap: 7px;
+    }
+    .cnt {
+      background: var(--surface2); border-radius: 999px; padding: 1px 7px;
+      font-family: 'DM Mono', monospace; font-size: 10px;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip.active[data-filter="all"]           { background: rgba(56,189,248,.1);  border-color: var(--accent); color: var(--accent); }
+    .chip.active[data-filter="Dimagi"]        { background: rgba(129,140,248,.1); border-color: var(--c1);     color: var(--c1); }
+    .chip.active[data-filter="Omad Bekzod"]  { background: rgba(52,211,153,.1);  border-color: var(--c2);     color: var(--c2); }
+    .chip.active[data-filter="Sandooq"]      { background: rgba(251,146,60,.1);  border-color: var(--c3);     color: var(--c3); }
+    .chip.active[data-filter="Mini GES"]     { background: rgba(244,114,182,.1); border-color: var(--c4);     color: var(--c4); }
+    .chip.active[data-filter="MICRO GES"]    { background: rgba(250,204,21,.1);  border-color: var(--c5);     color: var(--c5); }
+    .chip.active[data-filter="ZAR WATT GES"] { background: rgba(167,139,250,.1); border-color: var(--c6);     color: var(--c6); }
+    .table-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 22px; overflow: hidden;
+      animation: fadeUp .55s .2s ease both;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 820px; }
+    thead { background: var(--surface2); border-bottom: 1px solid var(--border); }
+    th {
+      padding: 13px 18px; text-align: left; font-size: 11px; font-weight: 600;
+      color: var(--muted); text-transform: uppercase; letter-spacing: .09em; white-space: nowrap;
+    }
+    td { padding: 15px 18px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 13px; }
+    tr:last-child td { border-bottom: none; }
+    tr { transition: background .14s; }
+    tr:hover td { background: rgba(56,189,248,.035); }
+    .idx { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); width: 46px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px; border-radius: 8px;
+      padding: 5px 10px; font-size: 11px; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+    }
+    .b-dimagi  { background: rgba(129,140,248,.14); color: var(--c1); border: 1px solid rgba(129,140,248,.25); }
+    .b-omad    { background: rgba(52,211,153,.12);  color: var(--c2); border: 1px solid rgba(52,211,153,.25); }
+    .b-sandooq { background: rgba(251,146,60,.12);  color: var(--c3); border: 1px solid rgba(251,146,60,.25); }
+    .b-mini    { background: rgba(244,114,182,.12); color: var(--c4); border: 1px solid rgba(244,114,182,.25); }
+    .b-micro   { background: rgba(250,204,21,.1);   color: var(--c5); border: 1px solid rgba(250,204,21,.25); }
+    .b-zar     { background: rgba(167,139,250,.12); color: var(--c6); border: 1px solid rgba(167,139,250,.25); }
+    .lot-id a {
+      font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
+      color: var(--accent); text-decoration: none; transition: opacity .15s;
+    }
+    .lot-id a:hover { opacity: .65; text-decoration: underline; }
+    .lot-name-cell { color: var(--text); line-height: 1.55; max-width: 400px; }
+    .lot-name-cell em { font-style: normal; color: var(--accent); font-weight: 600; }
+    .date-cell { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; color: #64748b; }
+    #emptyState { display: none; padding: 60px 20px; text-align: center; color: var(--muted); }
+    #emptyState .ico { font-size: 36px; display: block; margin-bottom: 12px; }
+    .row-count {
+      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
+      padding: 11px 18px; border-top: 1px solid var(--border); background: var(--surface2);
+    }
+    footer {
+      margin-top: 22px; color: var(--muted); font-size: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px;
+      animation: fadeUp .55s .3s ease both;
+    }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    footer a:hover { text-decoration: underline; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 720px) { header { flex-direction: column; } h1 { font-size: 26px; } }
+  </style>
 </head>
-
 <body>
+<main class="page">
 
-<div class="title">GROUPED GES PROJECTS</div>
+  <header>
+    <div>
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <h1>Mini GES Loyihalari</h1>
+      </div>
+      <p class="subtitle">Buxoro viloyati, G'ijduvon tumani bo'yicha barcha mikro GES loyihalari ro'yxati.<br>Lot ID ustiga bosib, e-auksion.uz saytida ochishingiz mumkin.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>74</strong><span>Jami lotlar</span></div>
+      <div class="stat"><strong>6</strong><span>MCHJ guruh</span></div>
+      <div class="stat"><strong>5</strong><span>Turli sana</span></div>
+    </div>
+  </header>
 
-<!-- DIMAGI -->
+  <section class="toolbar">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input id="searchInput" type="search" placeholder="MCHJ nomi, lot ID, loyiha nomi yoki sana bo'yicha qidiring..." />
+    </div>
+    <div class="chips">
+      <button class="chip active" data-filter="all">Barchasi <span class="cnt">74</span></button>
+      <button class="chip" data-filter="Mini GES">💧 Mini GES <span class="cnt">36</span></button>
+      <button class="chip" data-filter="Sandooq">📦 Sandooq <span class="cnt">13</span></button>
+      <button class="chip" data-filter="Dimagi">⚡ Dimagi <span class="cnt">10</span></button>
+      <button class="chip" data-filter="MICRO GES">🔆 MICRO GES <span class="cnt">10</span></button>
+      <button class="chip" data-filter="ZAR WATT GES">✨ ZAR WATT GES <span class="cnt">3</span></button>
+      <button class="chip" data-filter="Omad Bekzod">🌿 Omad Bekzod <span class="cnt">2</span></button>
+    </div>
+  </section>
 
-<div class="group-title">DIMAGI</div>
+  <section class="table-card">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>MCHJ Nomi</th>
+            <th>Lot ID</th>
+            <th>Loyiha Nomi</th>
+            <th>Sana</th>
+          </tr>
+        </thead>
+        <tbody id="lotTable"></tbody>
+      </table>
+    </div>
+    <div id="emptyState"><span class="ico">🔍</span><p>Hech qanday lot topilmadi.</p></div>
+    <div class="row-count" id="rowCount">74 ta lot ko'rsatilmoqda</div>
+  </section>
 
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?1">
-<div class="info">
-<div class="name">GES-50 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 07.05.2026</p>
-</div>
-</div>
+  <footer>
+    <span>💡 "GES-50", "Dimagi" yoki lot ID orqali tez qidiring</span>
+    <a href="https://e-auksion.uz" target="_blank" rel="noopener">e-auksion.uz ↗</a>
+  </footer>
 
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
+</main>
+<script>
+const lotsData = [
+  { mchj: 'Dimagi', id: '22838282', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-50 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22838281', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-48 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22838275', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-47 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22838274', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-49 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22838273', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-46 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22838271', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-53 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Dimagi', id: '22797823', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-26 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Dimagi', id: '22758731', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-25 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Dimagi', id: '22758728', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-24 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Dimagi', id: '22758727', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-23 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Omad Bekzod', id: '23502367', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-18 qurish loyihasi (4 kVt)", date: '15.05.2026' },
+  { mchj: 'Omad Bekzod', id: '23502349', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES qurish loyihasi (4 kVt)", date: '15.05.2026' },
+  { mchj: 'Sandooq', id: '22838280', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-54 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838279', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-58 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838278', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-59 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838277', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-55 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838276', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-56 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838272', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-57 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838260', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-39 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22838259', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-38 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
+  { mchj: 'Sandooq', id: '22758719', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-9 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Sandooq', id: '22758717', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-10 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Sandooq', id: '22758682', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-6 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Sandooq', id: '22758681', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-7 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Sandooq', id: '22758675', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-8 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Mini GES', id: '23502359', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-12 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Mini GES', id: '23502358', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-11 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'Mini GES', id: '22958155', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-84 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22958154', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-85 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22958153', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-86 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924115', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-76 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924114', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-77 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924113', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-74 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924112', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-73 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924111', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-75 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924110', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-78 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924109', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-72 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924107', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-79 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924104', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-81 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924103', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-83 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924102', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-80 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924101', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-82 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924100', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-70 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924099', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-71 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924098', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-68 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924097', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-69 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924096', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-31 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924095', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-30 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22924093', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-52 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22895508', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-28 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22895500', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-29 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22895499', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-36 qurish loyihasi (4 kVt)", date: '04.05.2026' },
+  { mchj: 'Mini GES', id: '22838270', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-40 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Mini GES', id: '22838264', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-42 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Mini GES', id: '22838263', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-43 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Mini GES', id: '22838262', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-41 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Mini GES', id: '22838261', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-27 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'Mini GES', id: '22758680', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-4 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Mini GES', id: '22758679', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-5 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Mini GES', id: '22758678', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-3 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'Mini GES', id: '22758676', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-2 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'MICRO GES', id: '22838283', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-62 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22838269', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-66 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22838268', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-64 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22838267', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-65 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22838266', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-67 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22838265', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-63 qurish loyihasi (4 kVt)", date: '30.04.2026' },
+  { mchj: 'MICRO GES', id: '22758730', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-22 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'MICRO GES', id: '22758729', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-21 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'MICRO GES', id: '22758726', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-20 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'MICRO GES', id: '22758725', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-19 qurish loyihasi (4 kVt)", date: '27.04.2026' },
+  { mchj: 'ZAR WATT GES', id: '23502363', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-16 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'ZAR WATT GES', id: '23502362', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-15 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+  { mchj: 'ZAR WATT GES', id: '23502361', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-14 qurish loyihasi (4 kVt)", date: '07.05.2026' },
+];
 
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?2">
-<div class="info">
-<div class="name">GES-48 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 07.05.2026</p>
-</div>
-</div>
+const badgeCfg = {
+  'Dimagi':       { cls: 'b-dimagi',  icon: '⚡' },
+  'Omad Bekzod':  { cls: 'b-omad',   icon: '🌿' },
+  'Sandooq':      { cls: 'b-sandooq', icon: '📦' },
+  'Mini GES':     { cls: 'b-mini',   icon: '💧' },
+  'MICRO GES':    { cls: 'b-micro',  icon: '🔆' },
+  'ZAR WATT GES': { cls: 'b-zar',   icon: '✨' },
+};
 
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
+function highlightName(name) {
+  return name.replace(/(mikro GES[-\d]*)/gi, '<em>$1</em>');
+}
 
-<!-- MICRO GES -->
+const tbody = document.getElementById('lotTable');
+const emptyState = document.getElementById('emptyState');
+const rowCount = document.getElementById('rowCount');
+const searchInput = document.getElementById('searchInput');
+const chips = Array.from(document.querySelectorAll('.chip'));
+let activeFilter = 'all';
 
-<div class="group-title">MICRO GES</div>
+function render() {
+  const q = searchInput.value.trim().toLowerCase();
+  const filtered = lotsData.filter(lot => {
+    const matchFilter = activeFilter === 'all' || lot.mchj === activeFilter;
+    const matchSearch = !q || `${lot.mchj} ${lot.id} ${lot.name} ${lot.date}`.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+  tbody.innerHTML = filtered.map((lot, i) => {
+    const cfg = badgeCfg[lot.mchj] || { cls: '', icon: '•' };
+    return `<tr>
+      <td class="idx">${i + 1}</td>
+      <td><span class="badge ${cfg.cls}">${cfg.icon} ${lot.mchj}</span></td>
+      <td class="lot-id"><a href="https://e-auksion.uz/lot-view?lot_id=${lot.id}" target="_blank" rel="noopener">${lot.id} ↗</a></td>
+      <td class="lot-name-cell">${highlightName(lot.name)}</td>
+      <td class="date-cell">${lot.date}</td>
+    </tr>`;
+  }).join('');
+  emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
+  rowCount.textContent = `${filtered.length} ta lot ko'rsatilmoqda`;
+}
 
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?3">
-<div class="info">
-<div class="name">GES-62 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 07.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?4">
-<div class="info">
-<div class="name">GES-66 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 07.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?5">
-<div class="info">
-<div class="name">GES-67 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 07.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
-<!-- ZAR WATT -->
-
-<div class="group-title">ZAR WATT GES</div>
-
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?6">
-<div class="info">
-<div class="name">GES-14 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 15.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?7">
-<div class="info">
-<div class="name">GES-15 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 15.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
-<div class="card">
-<div class="left">
-<img src="https://picsum.photos/400/250?8">
-<div class="info">
-<div class="name">GES-16 qurish loyihasi</div>
-<p><b>Viloyat:</b> Buxoro viloyati</p>
-<p><b>Tuman:</b> G'ijduvon tumani</p>
-<p><b>MFY:</b> Baraka MFY</p>
-<p><b>Deadline:</b> 15.05.2026</p>
-</div>
-</div>
-
-<div class="right">
-<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
-<div class="price">1 500 UZS</div>
-</div>
-</div>
-
+searchInput.addEventListener('input', render);
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeFilter = chip.dataset.filter;
+    render();
+  });
+});
+render();
+</script>
 </body>
 </html>
