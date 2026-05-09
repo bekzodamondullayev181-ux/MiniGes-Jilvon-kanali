@@ -3,49 +3,99 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grouped Lots by MCHJ</title>
+<title>Mini GES Projects</title>
 
 <style>
 body{
     font-family: Arial, sans-serif;
-    background:#f4f4f4;
-    padding:20px;
+    background:#f4f6f9;
+    margin:0;
+    padding:30px;
 }
 
 h1{
     text-align:center;
     color:#0b1b48;
-    margin-bottom:30px;
+    margin-bottom:40px;
+    font-size:50px;
+}
+
+.group{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:40px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.group-title{
+    font-size:35px;
+    font-weight:bold;
+    color:#006400;
+    margin-bottom:20px;
+    border-left:10px solid green;
+    padding-left:15px;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    background:white;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 th{
     background:#0b1b48;
     color:white;
-    padding:14px;
-    border:1px solid #ddd;
+    padding:15px;
+    font-size:18px;
 }
 
 td{
-    padding:12px;
-    border:1px solid #ddd;
+    padding:14px;
+    border-bottom:1px solid #ddd;
     text-align:center;
+    font-size:17px;
 }
 
-tr:nth-child(even){
-    background:#f9f9f9;
+tr:hover{
+    background:#f2f2f2;
 }
 
-.group{
-    background:#d9f2e6 !important;
+a{
+    color:#0b1b48;
+    text-decoration:none;
     font-weight:bold;
-    color:#006400;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.price{
+    background:#d4f5dc;
+    color:green;
+    font-weight:bold;
+    padding:8px 12px;
+    border-radius:10px;
+    display:inline-block;
+}
+
+@media(max-width:900px){
+    body{
+        padding:10px;
+    }
+
+    h1{
+        font-size:35px;
+    }
+
+    .group-title{
+        font-size:28px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+    }
 }
 </style>
 </head>
@@ -54,108 +104,112 @@ tr:nth-child(even){
 
 <h1>GROUPED LOTS BY MCHJ</h1>
 
+<!-- DIMAGI -->
+<div class="group">
+
+<div class="group-title">
+DIMAGI
+</div>
+
 <table>
-<tr>
-    <th>Group Name</th>
-    <th>GES Number</th>
-    <th>Viloyat</th>
-    <th>Tuman</th>
-    <th>MFY</th>
-    <th>Deadline</th>
-    <th>Price</th>
-</tr>
 
-<tr class="group">
-    <td>MICRO GES</td>
-    <td>GES-62</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
+<tr>
+<th>#</th>
+<th>Lot ID</th>
+<th>GES</th>
+<th>Location</th>
+<th>Date</th>
+<th>Price</th>
 </tr>
 
 <tr>
-    <td>MICRO GES</td>
-    <td>GES-63</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
+<td>1</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=22838282" target="_blank">22838282</a></td>
+<td>GES-50</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>07.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
 </tr>
 
 <tr>
-    <td>MICRO GES</td>
-    <td>GES-64</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
+<td>2</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=22838281" target="_blank">22838281</a></td>
+<td>GES-48</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>07.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
 </tr>
 
 <tr>
-    <td>MICRO GES</td>
-    <td>GES-65</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
+<td>3</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=22838275" target="_blank">22838275</a></td>
+<td>GES-47</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>07.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
 </tr>
 
 <tr>
-    <td>MICRO GES</td>
-    <td>GES-66</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
+<td>4</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=22838274" target="_blank">22838274</a></td>
+<td>GES-49</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>07.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
 </tr>
 
 <tr>
-    <td>MICRO GES</td>
-    <td>GES-67</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>07.05.2026</td>
-    <td>1 500 UZS</td>
-</tr>
-
-<tr class="group">
-    <td>ZAR WATT GES</td>
-    <td>GES-14</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>15.05.2026</td>
-    <td>1 500 UZS</td>
-</tr>
-
-<tr>
-    <td>ZAR WATT GES</td>
-    <td>GES-15</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>15.05.2026</td>
-    <td>1 500 UZS</td>
-</tr>
-
-<tr>
-    <td>ZAR WATT GES</td>
-    <td>GES-16</td>
-    <td>Buxoro</td>
-    <td>G'ijduvon</td>
-    <td>Baraka MFY</td>
-    <td>15.05.2026</td>
-    <td>1 500 UZS</td>
+<td>5</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=22838273" target="_blank">22838273</a></td>
+<td>GES-46</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>07.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
 </tr>
 
 </table>
+
+</div>
+
+<!-- OMAD BEKZOD -->
+<div class="group">
+
+<div class="group-title">
+OMAD BEKZOD
+</div>
+
+<table>
+
+<tr>
+<th>#</th>
+<th>Lot ID</th>
+<th>GES</th>
+<th>Location</th>
+<th>Date</th>
+<th>Price</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=23502367" target="_blank">23502367</a></td>
+<td>GES-18</td>
+<td>Buxoro, G'ijduvon, Baraka MFY</td>
+<td>15.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
+</tr>
+
+<tr>
+<td>2</td>
+<td><a href="https://e-auksion.uz/lot-view?lot_id=23502349" target="_blank">23502349</a></td>
+<td>GES Project</td>
+<td>Buxoro, G'ijduvon, Ulfatbibi MFY</td>
+<td>15.05.2026</td>
+<td><span class="price">1 500 UZS</span></td>
+</tr>
+
+</table>
+
+</div>
 
 </body>
 </html>
