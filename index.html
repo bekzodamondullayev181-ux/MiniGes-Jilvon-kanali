@@ -1,172 +1,298 @@
-FULL index.html CODE
-
-Copy EVERYTHING below and paste into your index.html file in GitHub.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grouped Lots by MCHJ</title>
+<title>GES Projects</title>
+
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f1f1f3;
-    margin: 0;
-    padding: 30px;
+
+body{
+    margin:0;
+    padding:30px;
+    background:#f3f3f3;
+    font-family:Arial, sans-serif;
 }
-h1 {
-    text-align: center;
-    color: #081847;
-    font-size: 52px;
-    margin-bottom: 40px;
+
+.title{
+    text-align:center;
+    font-size:55px;
+    font-weight:bold;
+    color:#081847;
+    margin-bottom:40px;
 }
-.table-container {
-    overflow-x: auto;
+
+.group-title{
+    font-size:34px;
+    font-weight:bold;
+    color:#081847;
+    margin-top:50px;
+    margin-bottom:25px;
 }
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+.card{
+    background:white;
+    border-radius:14px;
+    margin-bottom:25px;
+    display:flex;
+    justify-content:space-between;
+    gap:25px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+    align-items:center;
 }
-th {
-    background: #081847;
-    color: white;
-    padding: 18px;
-    font-size: 22px;
-    border: 1px solid #ccc;
+
+.left{
+    display:flex;
+    gap:20px;
+    align-items:center;
+    width:75%;
 }
-td {
-    padding: 16px;
-    border: 1px solid #d7d7d7;
-    text-align: center;
-    font-size: 18px;
+
+.left img{
+    width:240px;
+    height:150px;
+    object-fit:cover;
+    border-radius:10px;
 }
-.group-row {
-    background: #dff0e5;
-    font-weight: bold;
-    color: darkgreen;
+
+.info{
+    flex:1;
 }
-tr:hover {
-    background: #f5f5f5;
+
+.name{
+    font-size:30px;
+    font-weight:bold;
+    color:#12307a;
+    margin-bottom:15px;
 }
-@media (max-width: 900px) {
-    h1 {
-        font-size: 32px;
-    }
-    th, td {
-        font-size: 14px;
-        padding: 10px;
-    }
+
+.info p{
+    margin:7px 0;
+    font-size:22px;
 }
+
+.right{
+    width:22%;
+    text-align:right;
+}
+
+.status{
+    color:green;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:25px;
+}
+
+.price{
+    background:#dff5e5;
+    display:inline-block;
+    padding:15px 25px;
+    border-radius:10px;
+    font-size:34px;
+    font-weight:bold;
+}
+
+@media(max-width:900px){
+
+.card{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.left{
+    width:100%;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.left img{
+    width:100%;
+    height:auto;
+}
+
+.right{
+    width:100%;
+    text-align:left;
+}
+
+.title{
+    font-size:38px;
+}
+
+.name{
+    font-size:24px;
+}
+
+.info p{
+    font-size:18px;
+}
+
+}
+
 </style>
+
 </head>
+
 <body>
-<h1>GROUPED LOTS BY MCHJ</h1>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>Group Name</th>
-<th>ID</th>
-<th>Lot Name</th>
-<th>Date</th>
-</tr>
-</thead>
-<tbody>
-<tr class="group-row">
-<td>DIMAGI</td>
-<td>22838282</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-50 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>DIMAGI</td>
-<td>22838281</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-48 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>DIMAGI</td>
-<td>22838275</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-47 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>DIMAGI</td>
-<td>22838274</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-49 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>DIMAGI</td>
-<td>22838273</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-51 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr class="group-row">
-<td>MICRO GES</td>
-<td>22838283</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-62 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>MICRO GES</td>
-<td>22838269</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-66 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>MICRO GES</td>
-<td>22838268</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-64 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>MICRO GES</td>
-<td>22838267</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-65 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>MICRO GES</td>
-<td>22838266</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-67 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr>
-<td>MICRO GES</td>
-<td>22838265</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-63 qurish loyihasi (4 kVt)</td>
-<td>07.05.2026</td>
-</tr>
-<tr class="group-row">
-<td>ZAR WATT GES</td>
-<td>23502363</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-16 qurish loyihasi (4 kVt)</td>
-<td>15.05.2026</td>
-</tr>
-<tr>
-<td>ZAR WATT GES</td>
-<td>23502362</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-15 qurish loyihasi (4 kVt)</td>
-<td>15.05.2026</td>
-</tr>
-<tr>
-<td>ZAR WATT GES</td>
-<td>23502361</td>
-<td>Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-14 qurish loyihasi (4 kVt)</td>
-<td>15.05.2026</td>
-</tr>
-</tbody>
-</table>
+
+<div class="title">GROUPED GES PROJECTS</div>
+
+<!-- DIMAGI -->
+
+<div class="group-title">DIMAGI</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?1">
+<div class="info">
+<div class="name">GES-50 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 07.05.2026</p>
 </div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?2">
+<div class="info">
+<div class="name">GES-48 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 07.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<!-- MICRO GES -->
+
+<div class="group-title">MICRO GES</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?3">
+<div class="info">
+<div class="name">GES-62 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 07.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?4">
+<div class="info">
+<div class="name">GES-66 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 07.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?5">
+<div class="info">
+<div class="name">GES-67 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 07.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<!-- ZAR WATT -->
+
+<div class="group-title">ZAR WATT GES</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?6">
+<div class="info">
+<div class="name">GES-14 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 15.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?7">
+<div class="info">
+<div class="name">GES-15 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 15.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
+<div class="card">
+<div class="left">
+<img src="https://picsum.photos/400/250?8">
+<div class="info">
+<div class="name">GES-16 qurish loyihasi</div>
+<p><b>Viloyat:</b> Buxoro viloyati</p>
+<p><b>Tuman:</b> G'ijduvon tumani</p>
+<p><b>MFY:</b> Baraka MFY</p>
+<p><b>Deadline:</b> 15.05.2026</p>
+</div>
+</div>
+
+<div class="right">
+<div class="status">Savdo/Tanlov natijalarini rasmiylashtirish</div>
+<div class="price">1 500 UZS</div>
+</div>
+</div>
+
 </body>
 </html>
-
-After pasting:
-
-1. Scroll down
-2. Press Commit changes
-3. Refresh your GitHub Pages link after 20-30 seconds
