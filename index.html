@@ -1,372 +1,663 @@
 <!doctype html>
-<html lang="uz">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mini GES Loyihalari | E-Auksion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>Mini GES Project — All Lots</title>
   <style>
     :root {
-      --bg: #070d1a;
-      --surface: #0f1829;
-      --surface2: #162034;
-      --border: rgba(56,189,248,0.1);
-      --text: #e2eeff;
-      --muted: #5a7299;
-      --accent: #38bdf8;
-      --c1: #818cf8;
-      --c2: #34d399;
-      --c3: #fb923c;
-      --c4: #f472b6;
-      --c5: #facc15;
-      --c6: #a78bfa;
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --brand: #2563eb;
+      --brand-soft: #dbeafe;
+      --shadow: 0 18px 45px rgba(15,23,42,.08);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Sora', sans-serif;
-      background: var(--bg);
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #e0edff 0, transparent 34%), var(--bg);
       color: var(--text);
-      min-height: 100vh;
     }
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image:
-        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
-      background-size: 52px 52px;
-      pointer-events: none; z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed; top: -300px; left: 50%; transform: translateX(-50%);
-      width: 1000px; height: 600px;
-      background: radial-gradient(ellipse, rgba(56,189,248,0.07) 0%, transparent 65%);
-      pointer-events: none; z-index: 0;
-    }
-    .page {
-      position: relative; z-index: 1;
-      max-width: 1240px; margin: 0 auto; padding: 52px 24px 80px;
-    }
-    header {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 28px; margin-bottom: 44px;
-      animation: fadeUp .55s ease both;
-    }
-    .brand { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
-    .logo {
-      width: 50px; height: 50px; border-radius: 16px;
-      background: linear-gradient(135deg, #38bdf8, #818cf8);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
-      box-shadow: 0 0 36px rgba(56,189,248,0.28);
-    }
-    h1 {
-      font-size: clamp(24px, 4.5vw, 46px); font-weight: 800;
-      letter-spacing: -0.04em; line-height: 1.05;
-      background: linear-gradient(135deg, #e2eeff 0%, #38bdf8 55%, #818cf8 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .subtitle {
-      color: var(--muted); font-size: 14px; font-weight: 300;
-      margin-top: 6px; max-width: 520px; line-height: 1.6;
-    }
-    .stats { display: flex; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
-    .stat {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 18px; padding: 18px 22px; min-width: 118px;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .stat::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--c1));
-    }
-    .stat strong {
-      display: block; font-size: 32px; font-weight: 800;
-      font-family: 'DM Mono', monospace;
-      background: linear-gradient(135deg, var(--accent), var(--c1));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .stat span { color: var(--muted); font-size: 12px; display: block; margin-top: 2px; }
-    .toolbar {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 22px; padding: 20px; margin-bottom: 20px;
-      animation: fadeUp .55s .1s ease both;
-    }
-    .search-wrap { position: relative; margin-bottom: 16px; }
-    .search-icon {
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-      color: var(--muted); font-size: 16px; pointer-events: none;
-    }
-    input[type="search"] {
-      width: 100%; background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 14px; padding: 14px 16px 14px 48px;
-      font-size: 14px; font-family: 'Sora', sans-serif; color: var(--text); outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    input[type="search"]::placeholder { color: var(--muted); }
-    input[type="search"]::-webkit-search-cancel-button { filter: invert(1) opacity(.4); }
-    input[type="search"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,.12); }
+    .page { max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; }
+    .hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; margin-bottom: 24px; }
+    h1 { font-size: clamp(26px, 4vw, 42px); line-height: 1.05; margin: 0 0 10px; letter-spacing: -.04em; }
+    .subtitle { color: var(--muted); margin: 0; font-size: 15px; }
+    .stats { display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+    .stat { background: rgba(255,255,255,.8); border: 1px solid var(--border); border-radius: 18px; padding: 14px 18px; min-width: 120px; box-shadow: var(--shadow); backdrop-filter: blur(10px); }
+    .stat strong { display: block; font-size: 26px; }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .toolbar { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 16px; box-shadow: var(--shadow); margin-bottom: 18px; }
+    .search-row { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+    input { flex: 1; border: 1px solid var(--border); border-radius: 14px; padding: 13px 15px; font-size: 15px; outline: none; font-family: inherit; }
+    input:focus { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-soft); }
     .chips { display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip {
-      border: 1px solid var(--border); background: transparent; border-radius: 999px;
-      padding: 8px 14px; cursor: pointer; color: var(--muted);
-      font-family: 'Sora', sans-serif; font-size: 12px; font-weight: 600;
-      transition: all .18s; display: flex; align-items: center; gap: 7px;
-    }
-    .cnt {
-      background: var(--surface2); border-radius: 999px; padding: 1px 7px;
-      font-family: 'DM Mono', monospace; font-size: 10px;
-    }
-    .chip:hover { border-color: var(--accent); color: var(--accent); }
-    .chip.active[data-filter="all"]           { background: rgba(56,189,248,.1);  border-color: var(--accent); color: var(--accent); }
-    .chip.active[data-filter="Dimagi"]        { background: rgba(129,140,248,.1); border-color: var(--c1);     color: var(--c1); }
-    .chip.active[data-filter="Omad Bekzod"]  { background: rgba(52,211,153,.1);  border-color: var(--c2);     color: var(--c2); }
-    .chip.active[data-filter="Sandooq"]      { background: rgba(251,146,60,.1);  border-color: var(--c3);     color: var(--c3); }
-    .chip.active[data-filter="Mini GES"]     { background: rgba(244,114,182,.1); border-color: var(--c4);     color: var(--c4); }
-    .chip.active[data-filter="MICRO GES"]    { background: rgba(250,204,21,.1);  border-color: var(--c5);     color: var(--c5); }
-    .chip.active[data-filter="ZAR WATT GES"] { background: rgba(167,139,250,.1); border-color: var(--c6);     color: var(--c6); }
-    .table-card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 22px; overflow: hidden;
-      animation: fadeUp .55s .2s ease both;
-    }
+    .chip { border: 1px solid var(--border); background: #fff; border-radius: 999px; padding: 8px 14px; cursor: pointer; font-size: 13px; font-family: inherit; color: var(--text); transition: all .15s; }
+    .chip span { color: var(--muted); margin-left: 4px; }
+    .chip.active, .chip:hover { border-color: var(--brand); background: var(--brand-soft); color: var(--brand); }
+    .table-card { overflow: hidden; border: 1px solid var(--border); border-radius: 24px; background: var(--card); box-shadow: var(--shadow); }
     .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 820px; }
-    thead { background: var(--surface2); border-bottom: 1px solid var(--border); }
-    th {
-      padding: 13px 18px; text-align: left; font-size: 11px; font-weight: 600;
-      color: var(--muted); text-transform: uppercase; letter-spacing: .09em; white-space: nowrap;
-    }
-    td { padding: 15px 18px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; min-width: 860px; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+    th { position: sticky; top: 0; background: #f9fafb; z-index: 1; font-size: 12px; color: #374151; text-transform: uppercase; letter-spacing: .05em; }
+    tr:hover td { background: #f8fbff; }
     tr:last-child td { border-bottom: none; }
-    tr { transition: background .14s; }
-    tr:hover td { background: rgba(56,189,248,.035); }
-    .idx { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); width: 46px; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 5px; border-radius: 8px;
-      padding: 5px 10px; font-size: 11px; font-weight: 700; letter-spacing: .02em; white-space: nowrap;
+    .index { color: var(--muted); width: 48px; font-size: 13px; }
+    .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 11px; font-weight: 700; font-size: 12px; white-space: nowrap; }
+    a { color: var(--brand); font-weight: 700; text-decoration: none; font-family: monospace; font-size: 13px; }
+    a:hover { text-decoration: underline; }
+    .lot-name { font-size: 14px; line-height: 1.5; max-width: 520px; }
+    .date { white-space: nowrap; color: #374151; font-weight: 600; font-size: 13px; }
+    .empty { display: none; text-align: center; padding: 40px; color: var(--muted); }
+    .footer { color: var(--muted); font-size: 13px; margin-top: 14px; }
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; }
+      .stats { justify-content: flex-start; }
     }
-    .b-dimagi  { background: rgba(129,140,248,.14); color: var(--c1); border: 1px solid rgba(129,140,248,.25); }
-    .b-omad    { background: rgba(52,211,153,.12);  color: var(--c2); border: 1px solid rgba(52,211,153,.25); }
-    .b-sandooq { background: rgba(251,146,60,.12);  color: var(--c3); border: 1px solid rgba(251,146,60,.25); }
-    .b-mini    { background: rgba(244,114,182,.12); color: var(--c4); border: 1px solid rgba(244,114,182,.25); }
-    .b-micro   { background: rgba(250,204,21,.1);   color: var(--c5); border: 1px solid rgba(250,204,21,.25); }
-    .b-zar     { background: rgba(167,139,250,.12); color: var(--c6); border: 1px solid rgba(167,139,250,.25); }
-    .lot-id a {
-      font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500;
-      color: var(--accent); text-decoration: none; transition: opacity .15s;
-    }
-    .lot-id a:hover { opacity: .65; text-decoration: underline; }
-    .lot-name-cell { color: var(--text); line-height: 1.55; max-width: 400px; }
-    .lot-name-cell em { font-style: normal; color: var(--accent); font-weight: 600; }
-    .date-cell { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; white-space: nowrap; color: #64748b; }
-    #emptyState { display: none; padding: 60px 20px; text-align: center; color: var(--muted); }
-    #emptyState .ico { font-size: 36px; display: block; margin-bottom: 12px; }
-    .row-count {
-      font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted);
-      padding: 11px 18px; border-top: 1px solid var(--border); background: var(--surface2);
-    }
-    footer {
-      margin-top: 22px; color: var(--muted); font-size: 12px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 10px;
-      animation: fadeUp .55s .3s ease both;
-    }
-    footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
-    footer a:hover { text-decoration: underline; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 720px) { header { flex-direction: column; } h1 { font-size: 26px; } }
   </style>
 </head>
 <body>
-<main class="page">
-
-  <header>
-    <div>
-      <div class="brand">
-        <div class="logo">⚡</div>
-        <h1>Mini GES Loyihalari</h1>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <h1>Mini GES Project</h1>
+        <p class="subtitle">Barcha lot loyihalari ro'yxati. Lot ID ustiga bosib, e-auksion.uz saytida ochishingiz mumkin.</p>
       </div>
-      <p class="subtitle">Buxoro viloyati, G'ijduvon tumani bo'yicha barcha mikro GES loyihalari ro'yxati.<br>Lot ID ustiga bosib, e-auksion.uz saytida ochishingiz mumkin.</p>
-    </div>
-    <div class="stats">
-      <div class="stat"><strong>74</strong><span>Jami lotlar</span></div>
-      <div class="stat"><strong>6</strong><span>MCHJ guruh</span></div>
-      <div class="stat"><strong>5</strong><span>Turli sana</span></div>
-    </div>
-  </header>
+      <div class="stats">
+        <div class="stat"><strong>74</strong><span>Total lots</span></div>
+        <div class="stat"><strong>6</strong><span>MCHJ groups</span></div>
+        <div class="stat"><strong>5</strong><span>Dates</span></div>
+      </div>
+    </section>
 
-  <section class="toolbar">
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input id="searchInput" type="search" placeholder="MCHJ nomi, lot ID, loyiha nomi yoki sana bo'yicha qidiring..." />
-    </div>
-    <div class="chips">
-      <button class="chip active" data-filter="all">Barchasi <span class="cnt">74</span></button>
-      <button class="chip" data-filter="Mini GES">💧 Mini GES <span class="cnt">36</span></button>
-      <button class="chip" data-filter="Sandooq">📦 Sandooq <span class="cnt">13</span></button>
-      <button class="chip" data-filter="Dimagi">⚡ Dimagi <span class="cnt">10</span></button>
-      <button class="chip" data-filter="MICRO GES">🔆 MICRO GES <span class="cnt">10</span></button>
-      <button class="chip" data-filter="ZAR WATT GES">✨ ZAR WATT GES <span class="cnt">3</span></button>
-      <button class="chip" data-filter="Omad Bekzod">🌿 Omad Bekzod <span class="cnt">2</span></button>
-    </div>
-  </section>
+    <section class="toolbar">
+      <div class="search-row">
+        <input id="searchInput" type="search" placeholder="Search by MCHJ, ID, lot name, or date..." />
+      </div>
+      <div class="chips">
+        <button class="chip active" data-filter="all">All <span>74</span></button>
+<button class="chip" data-filter="dimagi">Dimagi <span>10</span></button>
+<button class="chip" data-filter="micro ges">MICRO GES <span>10</span></button>
+<button class="chip" data-filter="mini ges">Mini GES <span>36</span></button>
+<button class="chip" data-filter="omad bekzod">Omad Bekzod <span>2</span></button>
+<button class="chip" data-filter="sandooq">Sandooq <span>13</span></button>
+<button class="chip" data-filter="zar watt ges">ZAR WATT GES <span>3</span></button>
 
-  <section class="table-card">
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>MCHJ Nomi</th>
-            <th>Lot ID</th>
-            <th>Loyiha Nomi</th>
-            <th>Sana</th>
-          </tr>
-        </thead>
-        <tbody id="lotTable"></tbody>
-      </table>
-    </div>
-    <div id="emptyState"><span class="ico">🔍</span><p>Hech qanday lot topilmadi.</p></div>
-    <div class="row-count" id="rowCount">74 ta lot ko'rsatilmoqda</div>
-  </section>
+      </div>
+    </section>
 
-  <footer>
-    <span>💡 "GES-50", "Dimagi" yoki lot ID orqali tez qidiring</span>
-    <a href="https://e-auksion.uz" target="_blank" rel="noopener">e-auksion.uz ↗</a>
-  </footer>
+    <section class="table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>MCHJ Name</th>
+              <th>Lot ID</th>
+              <th>Lot Name</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="lotTable">
+            <tr data-mchj="dimagi" data-search="dimagi 22838282 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-50 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">1</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838282" target="_blank" rel="noopener noreferrer">22838282</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-50 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22838281 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-48 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">2</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838281" target="_blank" rel="noopener noreferrer">22838281</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-48 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22838275 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-47 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">3</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838275" target="_blank" rel="noopener noreferrer">22838275</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-47 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22838274 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-49 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">4</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838274" target="_blank" rel="noopener noreferrer">22838274</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-49 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22838273 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-46 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">5</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838273" target="_blank" rel="noopener noreferrer">22838273</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-46 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22838271 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-53 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">6</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838271" target="_blank" rel="noopener noreferrer">22838271</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-53 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22797823 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-26 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">7</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22797823" target="_blank" rel="noopener noreferrer">22797823</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-26 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22758731 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-25 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">8</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758731" target="_blank" rel="noopener noreferrer">22758731</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-25 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22758728 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-24 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">9</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758728" target="_blank" rel="noopener noreferrer">22758728</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-24 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="dimagi" data-search="dimagi 22758727 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-23 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">10</td>
+  <td><span class="badge" style="background:#ecfdf5;color:#047857">Dimagi</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758727" target="_blank" rel="noopener noreferrer">22758727</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-23 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="omad bekzod" data-search="omad bekzod 23502367 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-18 qurish loyihasi (4 kvt) 15.05.2026">
+  <td class="index">11</td>
+  <td><span class="badge" style="background:#fdf2f8;color:#9d174d">Omad Bekzod</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502367" target="_blank" rel="noopener noreferrer">23502367</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-18 qurish loyihasi (4 kVt)</td>
+  <td class="date">15.05.2026</td>
+</tr>
+<tr data-mchj="omad bekzod" data-search="omad bekzod 23502349 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges qurish loyihasi (4 kvt) 15.05.2026">
+  <td class="index">12</td>
+  <td><span class="badge" style="background:#fdf2f8;color:#9d174d">Omad Bekzod</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502349" target="_blank" rel="noopener noreferrer">23502349</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES qurish loyihasi (4 kVt)</td>
+  <td class="date">15.05.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838280 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-54 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">13</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838280" target="_blank" rel="noopener noreferrer">22838280</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-54 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838279 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-58 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">14</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838279" target="_blank" rel="noopener noreferrer">22838279</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-58 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838278 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-59 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">15</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838278" target="_blank" rel="noopener noreferrer">22838278</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-59 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838277 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-55 qurish loyihasi (quvvati 4 kvt) 30.04.2026">
+  <td class="index">16</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838277" target="_blank" rel="noopener noreferrer">22838277</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-55 qurish loyihasi (quvvati 4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838276 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-56 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">17</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838276" target="_blank" rel="noopener noreferrer">22838276</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-56 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838272 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-57 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">18</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838272" target="_blank" rel="noopener noreferrer">22838272</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-57 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838260 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-39 qurish loyihasi (quvvati 4 kvt) 30.04.2026">
+  <td class="index">19</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838260" target="_blank" rel="noopener noreferrer">22838260</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-39 qurish loyihasi (quvvati 4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22838259 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-38 qurish loyihasi (quvvati 4 kvt) 30.04.2026">
+  <td class="index">20</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838259" target="_blank" rel="noopener noreferrer">22838259</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-38 qurish loyihasi (quvvati 4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22758719 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-9 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">21</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758719" target="_blank" rel="noopener noreferrer">22758719</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-9 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22758717 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-10 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">22</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758717" target="_blank" rel="noopener noreferrer">22758717</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-10 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22758682 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-6 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">23</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758682" target="_blank" rel="noopener noreferrer">22758682</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-6 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22758681 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-7 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">24</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758681" target="_blank" rel="noopener noreferrer">22758681</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-7 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="sandooq" data-search="sandooq 22758675 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-8 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">25</td>
+  <td><span class="badge" style="background:#f0fdf4;color:#166534">Sandooq</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758675" target="_blank" rel="noopener noreferrer">22758675</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-8 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 23502359 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-12 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">26</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502359" target="_blank" rel="noopener noreferrer">23502359</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-12 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 23502358 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-11 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">27</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502358" target="_blank" rel="noopener noreferrer">23502358</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-11 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22958155 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-84 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">28</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22958155" target="_blank" rel="noopener noreferrer">22958155</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-84 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22958154 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-85 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">29</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22958154" target="_blank" rel="noopener noreferrer">22958154</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-85 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22958153 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-86 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">30</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22958153" target="_blank" rel="noopener noreferrer">22958153</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-86 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924115 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-76 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">31</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924115" target="_blank" rel="noopener noreferrer">22924115</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-76 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924114 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-77 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">32</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924114" target="_blank" rel="noopener noreferrer">22924114</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-77 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924113 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-74 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">33</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924113" target="_blank" rel="noopener noreferrer">22924113</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-74 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924112 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-73 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">34</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924112" target="_blank" rel="noopener noreferrer">22924112</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-73 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924111 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-75 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">35</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924111" target="_blank" rel="noopener noreferrer">22924111</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-75 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924110 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-78 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">36</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924110" target="_blank" rel="noopener noreferrer">22924110</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-78 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924109 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-72 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">37</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924109" target="_blank" rel="noopener noreferrer">22924109</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-72 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924107 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-79 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">38</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924107" target="_blank" rel="noopener noreferrer">22924107</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-79 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924104 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-81 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">39</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924104" target="_blank" rel="noopener noreferrer">22924104</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-81 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924103 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-83 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">40</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924103" target="_blank" rel="noopener noreferrer">22924103</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-83 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924102 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-80 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">41</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924102" target="_blank" rel="noopener noreferrer">22924102</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-80 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924101 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-82 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">42</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924101" target="_blank" rel="noopener noreferrer">22924101</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-82 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924100 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-70 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">43</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924100" target="_blank" rel="noopener noreferrer">22924100</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-70 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924099 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-71 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">44</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924099" target="_blank" rel="noopener noreferrer">22924099</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-71 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924098 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-68 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">45</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924098" target="_blank" rel="noopener noreferrer">22924098</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-68 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924097 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-69 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">46</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924097" target="_blank" rel="noopener noreferrer">22924097</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-69 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924096 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-31 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">47</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924096" target="_blank" rel="noopener noreferrer">22924096</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-31 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924095 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-30 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">48</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924095" target="_blank" rel="noopener noreferrer">22924095</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-30 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22924093 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-52 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">49</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22924093" target="_blank" rel="noopener noreferrer">22924093</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-52 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22895508 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-28 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">50</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22895508" target="_blank" rel="noopener noreferrer">22895508</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-28 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22895500 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-29 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">51</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22895500" target="_blank" rel="noopener noreferrer">22895500</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-29 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22895499 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-36 qurish loyihasi (4 kvt) 04.05.2026">
+  <td class="index">52</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22895499" target="_blank" rel="noopener noreferrer">22895499</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-36 qurish loyihasi (4 kVt)</td>
+  <td class="date">04.05.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22838270 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-40 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">53</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838270" target="_blank" rel="noopener noreferrer">22838270</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-40 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22838264 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-42 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">54</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838264" target="_blank" rel="noopener noreferrer">22838264</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-42 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22838263 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-43 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">55</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838263" target="_blank" rel="noopener noreferrer">22838263</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-43 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22838262 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-41 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">56</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838262" target="_blank" rel="noopener noreferrer">22838262</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-41 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22838261 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-27 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">57</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838261" target="_blank" rel="noopener noreferrer">22838261</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-27 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22758680 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-4 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">58</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758680" target="_blank" rel="noopener noreferrer">22758680</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-4 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22758679 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-5 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">59</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758679" target="_blank" rel="noopener noreferrer">22758679</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-5 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22758678 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-3 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">60</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758678" target="_blank" rel="noopener noreferrer">22758678</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-3 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="mini ges" data-search="mini ges 22758676 buxoro viloyati, g'ijduvon tumani, ulfatbibi mfy, katta jilvon kanalida mikro ges-2 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">61</td>
+  <td><span class="badge" style="background:#fef3c7;color:#92400e">Mini GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758676" target="_blank" rel="noopener noreferrer">22758676</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-2 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838283 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-62 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">62</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838283" target="_blank" rel="noopener noreferrer">22838283</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-62 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838269 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-66 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">63</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838269" target="_blank" rel="noopener noreferrer">22838269</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-66 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838268 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-64 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">64</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838268" target="_blank" rel="noopener noreferrer">22838268</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-64 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838267 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-65 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">65</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838267" target="_blank" rel="noopener noreferrer">22838267</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-65 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838266 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-67 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">66</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838266" target="_blank" rel="noopener noreferrer">22838266</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-67 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22838265 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-63 qurish loyihasi (4 kvt) 30.04.2026">
+  <td class="index">67</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22838265" target="_blank" rel="noopener noreferrer">22838265</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-63 qurish loyihasi (4 kVt)</td>
+  <td class="date">30.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22758730 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-22 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">68</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758730" target="_blank" rel="noopener noreferrer">22758730</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-22 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22758729 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-21 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">69</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758729" target="_blank" rel="noopener noreferrer">22758729</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-21 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22758726 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-20 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">70</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758726" target="_blank" rel="noopener noreferrer">22758726</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-20 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="micro ges" data-search="micro ges 22758725 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-19 qurish loyihasi (4 kvt) 27.04.2026">
+  <td class="index">71</td>
+  <td><span class="badge" style="background:#eff6ff;color:#1d4ed8">MICRO GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=22758725" target="_blank" rel="noopener noreferrer">22758725</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-19 qurish loyihasi (4 kVt)</td>
+  <td class="date">27.04.2026</td>
+</tr>
+<tr data-mchj="zar watt ges" data-search="zar watt ges 23502363 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-16 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">72</td>
+  <td><span class="badge" style="background:#fff7ed;color:#9a3412">ZAR WATT GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502363" target="_blank" rel="noopener noreferrer">23502363</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-16 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="zar watt ges" data-search="zar watt ges 23502362 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-15 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">73</td>
+  <td><span class="badge" style="background:#fff7ed;color:#9a3412">ZAR WATT GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502362" target="_blank" rel="noopener noreferrer">23502362</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-15 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
+<tr data-mchj="zar watt ges" data-search="zar watt ges 23502361 buxoro viloyati, g'ijduvon tumani, baraka mfy, katta jilvon kanalida mikro ges-14 qurish loyihasi (4 kvt) 07.05.2026">
+  <td class="index">74</td>
+  <td><span class="badge" style="background:#fff7ed;color:#9a3412">ZAR WATT GES</span></td>
+  <td><a href="https://e-auksion.uz/lot-view?lot_id=23502361" target="_blank" rel="noopener noreferrer">23502361</a></td>
+  <td class="lot-name">Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-14 qurish loyihasi (4 kVt)</td>
+  <td class="date">07.05.2026</td>
+</tr>
 
-</main>
-<script>
-const lotsData = [
-  { mchj: 'Dimagi', id: '22838282', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-50 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22838281', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-48 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22838275', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-47 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22838274', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-49 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22838273', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-46 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22838271', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-53 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Dimagi', id: '22797823', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-26 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Dimagi', id: '22758731', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-25 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Dimagi', id: '22758728', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-24 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Dimagi', id: '22758727', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-23 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Omad Bekzod', id: '23502367', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-18 qurish loyihasi (4 kVt)", date: '15.05.2026' },
-  { mchj: 'Omad Bekzod', id: '23502349', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES qurish loyihasi (4 kVt)", date: '15.05.2026' },
-  { mchj: 'Sandooq', id: '22838280', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-54 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838279', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-58 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838278', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-59 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838277', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-55 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838276', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-56 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838272', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-57 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838260', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-39 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22838259', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-38 qurish loyihasi (quvvati 4 kVt)", date: '30.04.2026' },
-  { mchj: 'Sandooq', id: '22758719', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-9 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Sandooq', id: '22758717', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-10 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Sandooq', id: '22758682', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-6 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Sandooq', id: '22758681', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-7 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Sandooq', id: '22758675', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-8 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Mini GES', id: '23502359', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-12 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Mini GES', id: '23502358', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-11 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'Mini GES', id: '22958155', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-84 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22958154', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-85 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22958153', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-86 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924115', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-76 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924114', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-77 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924113', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-74 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924112', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-73 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924111', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-75 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924110', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-78 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924109', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-72 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924107', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-79 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924104', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-81 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924103', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-83 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924102', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-80 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924101', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-82 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924100', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-70 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924099', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-71 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924098', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-68 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924097', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-69 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924096', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-31 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924095', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-30 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22924093', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-52 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22895508', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-28 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22895500', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-29 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22895499', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-36 qurish loyihasi (4 kVt)", date: '04.05.2026' },
-  { mchj: 'Mini GES', id: '22838270', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-40 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Mini GES', id: '22838264', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-42 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Mini GES', id: '22838263', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-43 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Mini GES', id: '22838262', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-41 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Mini GES', id: '22838261', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-27 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'Mini GES', id: '22758680', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-4 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Mini GES', id: '22758679', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-5 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Mini GES', id: '22758678', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-3 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'Mini GES', id: '22758676', name: "Buxoro viloyati, G'ijduvon tumani, Ulfatbibi MFY, Katta jilvon kanalida mikro GES-2 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'MICRO GES', id: '22838283', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-62 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22838269', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-66 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22838268', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-64 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22838267', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-65 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22838266', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-67 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22838265', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-63 qurish loyihasi (4 kVt)", date: '30.04.2026' },
-  { mchj: 'MICRO GES', id: '22758730', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-22 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'MICRO GES', id: '22758729', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-21 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'MICRO GES', id: '22758726', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-20 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'MICRO GES', id: '22758725', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-19 qurish loyihasi (4 kVt)", date: '27.04.2026' },
-  { mchj: 'ZAR WATT GES', id: '23502363', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-16 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'ZAR WATT GES', id: '23502362', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-15 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-  { mchj: 'ZAR WATT GES', id: '23502361', name: "Buxoro viloyati, G'ijduvon tumani, Baraka MFY, Katta jilvon kanalida mikro GES-14 qurish loyihasi (4 kVt)", date: '07.05.2026' },
-];
+          </tbody>
+        </table>
+      </div>
+      <div id="emptyState" class="empty">No lots found for this search/filter.</div>
+    </section>
+    <p class="footer">Tip: use the search box to quickly find "GES-50", "Dimagi", or a specific lot ID.</p>
+  </main>
 
-const badgeCfg = {
-  'Dimagi':       { cls: 'b-dimagi',  icon: '⚡' },
-  'Omad Bekzod':  { cls: 'b-omad',   icon: '🌿' },
-  'Sandooq':      { cls: 'b-sandooq', icon: '📦' },
-  'Mini GES':     { cls: 'b-mini',   icon: '💧' },
-  'MICRO GES':    { cls: 'b-micro',  icon: '🔆' },
-  'ZAR WATT GES': { cls: 'b-zar',   icon: '✨' },
-};
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const rows = Array.from(document.querySelectorAll('#lotTable tr'));
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = 'all';
 
-function highlightName(name) {
-  return name.replace(/(mikro GES[-\d]*)/gi, '<em>$1</em>');
-}
+    function applyFilters() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach(row => {
+        const matchesText = !query || row.dataset.search.includes(query);
+        const matchesFilter = activeFilter === 'all' || row.dataset.mchj === activeFilter;
+        const show = matchesText && matchesFilter;
+        row.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      emptyState.style.display = visible === 0 ? 'block' : 'none';
+    }
 
-const tbody = document.getElementById('lotTable');
-const emptyState = document.getElementById('emptyState');
-const rowCount = document.getElementById('rowCount');
-const searchInput = document.getElementById('searchInput');
-const chips = Array.from(document.querySelectorAll('.chip'));
-let activeFilter = 'all';
-
-function render() {
-  const q = searchInput.value.trim().toLowerCase();
-  const filtered = lotsData.filter(lot => {
-    const matchFilter = activeFilter === 'all' || lot.mchj === activeFilter;
-    const matchSearch = !q || `${lot.mchj} ${lot.id} ${lot.name} ${lot.date}`.toLowerCase().includes(q);
-    return matchFilter && matchSearch;
-  });
-  tbody.innerHTML = filtered.map((lot, i) => {
-    const cfg = badgeCfg[lot.mchj] || { cls: '', icon: '•' };
-    return `<tr>
-      <td class="idx">${i + 1}</td>
-      <td><span class="badge ${cfg.cls}">${cfg.icon} ${lot.mchj}</span></td>
-      <td class="lot-id"><a href="https://e-auksion.uz/lot-view?lot_id=${lot.id}" target="_blank" rel="noopener">${lot.id} ↗</a></td>
-      <td class="lot-name-cell">${highlightName(lot.name)}</td>
-      <td class="date-cell">${lot.date}</td>
-    </tr>`;
-  }).join('');
-  emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
-  rowCount.textContent = `${filtered.length} ta lot ko'rsatilmoqda`;
-}
-
-searchInput.addEventListener('input', render);
-chips.forEach(chip => {
-  chip.addEventListener('click', () => {
-    chips.forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    activeFilter = chip.dataset.filter;
-    render();
-  });
-});
-render();
-</script>
+    searchInput.addEventListener('input', applyFilters);
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        applyFilters();
+      });
+    });
+  </script>
 </body>
 </html>
